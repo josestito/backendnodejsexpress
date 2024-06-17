@@ -75,6 +75,44 @@ var controller = {
         } catch (err) {
             return res.status(500).send({ message: 'Error al devolver los datos' });
         }
+    },
+    ActualizarProyectos: async function(req,res){
+        var id = req.params.id;
+        var proyectoNuevo = req.body;
+        try{
+            var proyectoActualizado = await Project.findByIdAndUpdate(id,proyectoNuevo,{new:true});
+            if(!proyectoActualizado){
+                return res.status(404).send({message:'No se a podido actualizar el proyecto'});
+            }
+            return res.status(200).send({message:'El proyecto se a actualizado correctamente'});
+        }
+        catch{
+            return res.status(500).send({message: 'Error al devolver los datos'});
+        }
+    },
+    BorrarProyecto: async function(req,res){
+        var id = req.params.id;
+        if(!id){
+            return res.status(404).send({message:'No se a podido eliminar el proyecto'});
+        }
+        try{
+             await Project.findByIdAndDelete(id);
+        }
+        catch{
+            return res.status(404).send({message:'No se a podido eliminar el proyecto'});
+        }
+    },
+    SubirImagen: async function(req,res){
+        var id = req.params.id;
+        var nombre_archivo = 'Imagen no subida';
+        if(req.files){
+            console.log(req.files);
+            return res.status(200).send({
+                files: req.files
+            });
+        }else{
+            return res.status(200).send({message:'no se han subido archivos'})
+        }
     }
 };
 

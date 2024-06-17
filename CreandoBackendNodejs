@@ -1,0 +1,6 @@
+NPM INIT
+npm install express
+npm install body-parser
+npm install connect-multiparty
+npm install mongoose
+npm install nodemon
